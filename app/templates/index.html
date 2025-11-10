@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elena - AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Elena</h1>
+                    <p>Your AI Personal Assistant</p>
+                </div>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span>
+                <span>Online</span>
+            </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-main">
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome Message -->
+                <div class="message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">
+                            <strong>Hey! I'm Elena 🤖</strong><br>
+                            Your AI personal assistant. I can help you with:
+                            <ul>
+                                <li>Answering questions </li>
+                                <li>Setting reminders ⏰</li>
+                                <li>Weather information 🌤️</li>
+                                <li>Notes and calculations 📝</li>
+                                <li>And much more!</li>
+                            </ul>
+                            Try saying "hello" or ask me anything!
+                        </div>
+                        <div class="message-time" id="welcomeTime"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="quick-btn" onclick="sendQuickMessage('hello')">
+                    <i class="fas fa-hand-wave"></i> Say Hello
+                </button>
+                <button class="quick-btn" onclick="sendQuickMessage('time')">
+                    <i class="fas fa-clock"></i> Current Time
+                </button>
+                <button class="quick-btn" onclick="sendQuickMessage('joke')">
+                    <i class="fas fa-laugh"></i> Tell a Joke
+                </button>
+                <button class="quick-btn" onclick="sendQuickMessage('help')">
+                    <i class="fas fa-question-circle"></i> Help
+                </button>
+            </div></div>
+            <!-- Input Area -->
+            <div class="input-section">
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Type your message here... (e.g., 'what is the capital of france?' or 'remind me to study')" 
+                       onkeypress="handleKeyPress(event)">
+                <button id="sendButton" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

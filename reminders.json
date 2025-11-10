@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "text": "go gym at 6 pm",
+    "created_at": "2025-11-10T21:42:22.930102"
+  },
+  {
+    "id": 2,
+    "text": "study python",
+    "created_at": "2025-11-10T21:48:23.344684",
+    "completed": false
+  }
+]
