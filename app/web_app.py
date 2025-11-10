@@ -1,19 +1,16 @@
 from flask import Flask, render_template, request, jsonify
+from main import EnhancedAIAssistant
+import json
+from datetime import datetime
 import os
-import sys
 
-# Add the current directory to Python path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Get the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-try:
-    from main import EnhancedAIAssistant
-except ImportError:
-    # Try relative import
-    from .main import EnhancedAIAssistant
-
-app = Flask(__name__, 
-            template_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates'),
-            static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static'))
+app = Flask(__name__,
+    template_folder=os.path.join(current_dir, 'templates'),
+    static_folder=os.path.join(current_dir, 'static')
+)
 
 assistant = EnhancedAIAssistant()
 
@@ -41,6 +38,16 @@ def chat():
         
     except Exception as e:
         return jsonify({'response': f'Sorry, I encountered an error: {str(e)}'})
+
+@app.route('/api/reminders', methods=['GET'])
+def get_reminders():
+    reminders = assistant._read_json(assistant.reminders_file)
+    return jsonify(reminders)
+
+@app.route('/api/notes', methods=['GET'])
+def get_notes():
+    notes = assistant._read_json(assistant.notes_file)
+    return jsonify(notes)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
