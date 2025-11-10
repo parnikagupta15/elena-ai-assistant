@@ -1,10 +1,20 @@
 from flask import Flask, render_template, request, jsonify
-from main import EnhancedAIAssistant
-import json
-from datetime import datetime
 import os
+import sys
 
-app = Flask(__name__)
+# Add the current directory to Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+try:
+    from main import EnhancedAIAssistant
+except ImportError:
+    # Try relative import
+    from .main import EnhancedAIAssistant
+
+app = Flask(__name__, 
+            template_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates'),
+            static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static'))
+
 assistant = EnhancedAIAssistant()
 
 @app.route('/')
