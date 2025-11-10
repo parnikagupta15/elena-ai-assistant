@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from main import EnhancedAIAssistant
+from .main import EnhancedAIAssistant
 import json
 from datetime import datetime
 import os
