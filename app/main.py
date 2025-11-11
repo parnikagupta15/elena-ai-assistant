@@ -55,12 +55,29 @@ class EnhancedAIAssistant:
         ]
         
         self.weather_data = {
-            "new york": {"temp": 22, "condition": "Sunny", "humidity": 65},
-            "london": {"temp": 15, "condition": "Cloudy", "humidity": 80},
-            "tokyo": {"temp": 25, "condition": "Partly Cloudy", "humidity": 70},
-            "delhi": {"temp": 30, "condition": "Hot", "humidity": 55},
-            "paris": {"temp": 18, "condition": "Rainy", "humidity": 75}
-        }
+    # Indian Cities
+    "mumbai": {"temp": 32, "condition": "Humid", "humidity": 75},
+    "delhi": {"temp": 30, "condition": "Smoggy", "humidity": 60},
+    "bangalore": {"temp": 26, "condition": "Pleasant", "humidity": 65},
+    "hyderabad": {"temp": 28, "condition": "Warm", "humidity": 55},
+    "ahmedabad": {"temp": 31, "condition": "Hot", "humidity": 50},
+    "chennai": {"temp": 34, "condition": "Hot", "humidity": 70},
+    "kolkata": {"temp": 31, "condition": "Humid", "humidity": 75},
+    "surat": {"temp": 30, "condition": "Warm", "humidity": 65},
+    "pune": {"temp": 27, "condition": "Pleasant", "humidity": 60},
+    "jaipur": {"temp": 29, "condition": "Dry", "humidity": 45},
+    "kanpur": {"temp": 28, "condition": "Clear", "humidity": 55},
+    "lucknow": {"temp": 29, "condition": "Warm", "humidity": 60},
+    "nagpur": {"temp": 32, "condition": "Hot", "humidity": 50},
+    "indore": {"temp": 28, "condition": "Clear", "humidity": 55},
+    "patna": {"temp": 30, "condition": "Humid", "humidity": 65},
+    
+    # International cities for variety
+    "london": {"temp": 15, "condition": "Cloudy", "humidity": 80},
+    "new york": {"temp": 22, "condition": "Sunny", "humidity": 65},
+    "tokyo": {"temp": 25, "condition": "Partly Cloudy", "humidity": 70},
+    "dubai": {"temp": 35, "condition": "Hot", "humidity": 40}
+}
         
         # Initialize files
         self.reminders_file = 'reminders.json'
@@ -88,6 +105,8 @@ class EnhancedAIAssistant:
         """Process user command and return response"""
         text_lower = text.lower()
         
+        if 'weather' in text_lower:
+            return self._handle_weather(text_lower) 
         # Greeting
         if any(word in text_lower for word in ['hello', 'hi', 'hey']):
             return self._handle_greeting()
@@ -103,10 +122,6 @@ class EnhancedAIAssistant:
         # Date
         elif any(word in text_lower for word in ['date', 'today', 'today\'s date']):
             return self._handle_date()
-        
-        # Weather
-        elif 'weather' in text_lower:
-            return self._handle_weather(text_lower)
         
         # Jokes
         elif any(word in text_lower for word in ['joke', 'funny', 'make me laugh']):
@@ -157,13 +172,21 @@ class EnhancedAIAssistant:
         return f"📅 Today is {current_date}"
     
     def _handle_weather(self, text):
-        """Handle weather queries"""
-        for city in self.weather_data.keys():
-            if city in text:
-                weather = self.weather_data[city]
-                return f"🌤️ Weather in {city.title()}: {weather['temp']}°C, {weather['condition']}, Humidity: {weather['humidity']}%"
-        
-        return "🌤️ I can tell you weather for: New York, London, Tokyo, Delhi, Paris. Try 'weather in London'"
+        text_lower = text.lower()
+        cities = list(self.weather_data.keys())
+        found_city = None
+        for city in cities:
+            if city in text_lower:
+                found_city = city
+                break
+    
+    # If no city found, use default (Kanpur)
+        if not found_city:
+            found_city = "kanpur"
+    
+    # Get weather data
+        weather_data = self.weather_service.get_weather(found_city)
+        return self.weather_service.format_weather_response(weather_data)
     
     def _tell_joke(self):
         """Tell a random joke"""
