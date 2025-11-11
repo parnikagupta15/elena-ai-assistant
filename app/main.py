@@ -55,29 +55,26 @@ class EnhancedAIAssistant:
         ]
         
         self.weather_data = {
-    # Indian Cities
-    "mumbai": {"temp": 32, "condition": "Humid", "humidity": 75},
-    "delhi": {"temp": 30, "condition": "Smoggy", "humidity": 60},
-    "bangalore": {"temp": 26, "condition": "Pleasant", "humidity": 65},
-    "hyderabad": {"temp": 28, "condition": "Warm", "humidity": 55},
-    "ahmedabad": {"temp": 31, "condition": "Hot", "humidity": 50},
-    "chennai": {"temp": 34, "condition": "Hot", "humidity": 70},
-    "kolkata": {"temp": 31, "condition": "Humid", "humidity": 75},
-    "surat": {"temp": 30, "condition": "Warm", "humidity": 65},
-    "pune": {"temp": 27, "condition": "Pleasant", "humidity": 60},
-    "jaipur": {"temp": 29, "condition": "Dry", "humidity": 45},
-    "kanpur": {"temp": 28, "condition": "Clear", "humidity": 55},
-    "lucknow": {"temp": 29, "condition": "Warm", "humidity": 60},
-    "nagpur": {"temp": 32, "condition": "Hot", "humidity": 50},
-    "indore": {"temp": 28, "condition": "Clear", "humidity": 55},
-    "patna": {"temp": 30, "condition": "Humid", "humidity": 65},
-    
-    # International cities for variety
-    "london": {"temp": 15, "condition": "Cloudy", "humidity": 80},
-    "new york": {"temp": 22, "condition": "Sunny", "humidity": 65},
-    "tokyo": {"temp": 25, "condition": "Partly Cloudy", "humidity": 70},
-    "dubai": {"temp": 35, "condition": "Hot", "humidity": 40}
-}
+            "mumbai": {"temp": 32, "condition": "Humid", "humidity": 75},
+            "delhi": {"temp": 30, "condition": "Smoggy", "humidity": 60},
+            "bangalore": {"temp": 26, "condition": "Pleasant", "humidity": 65},
+            "hyderabad": {"temp": 28, "condition": "Warm", "humidity": 55},
+            "ahmedabad": {"temp": 31, "condition": "Hot", "humidity": 50},
+            "chennai": {"temp": 34, "condition": "Hot", "humidity": 70},
+            "kolkata": {"temp": 31, "condition": "Humid", "humidity": 75},
+            "surat": {"temp": 30, "condition": "Warm", "humidity": 65},
+            "pune": {"temp": 27, "condition": "Pleasant", "humidity": 60},
+            "jaipur": {"temp": 29, "condition": "Dry", "humidity": 45},
+            "kanpur": {"temp": 28, "condition": "Clear", "humidity": 55},
+            "lucknow": {"temp": 29, "condition": "Warm", "humidity": 60},
+            "nagpur": {"temp": 32, "condition": "Hot", "humidity": 50},
+            "indore": {"temp": 28, "condition": "Clear", "humidity": 55},
+            "patna": {"temp": 30, "condition": "Humid", "humidity": 65},
+            "london": {"temp": 15, "condition": "Cloudy", "humidity": 80},
+            "new york": {"temp": 22, "condition": "Sunny", "humidity": 65},
+            "tokyo": {"temp": 25, "condition": "Partly Cloudy", "humidity": 70},
+            "dubai": {"temp": 35, "condition": "Hot", "humidity": 40}
+        }
         
         # Initialize files
         self.reminders_file = 'reminders.json'
@@ -173,20 +170,31 @@ class EnhancedAIAssistant:
     
     def _handle_weather(self, text):
         text_lower = text.lower()
-        cities = list(self.weather_data.keys())
-        found_city = None
-        for city in cities:
+        cities = {
+            "mumbai": "🌤️ **Weather in Mumbai:**\n• Temperature: 32°C (feels like 34°C)\n• Conditions: Humid and warm\n• Humidity: 75%\n• Wind: 12 km/h SW\n• High/Low: 34°C / 28°C",
+            "delhi": "🌤️ **Weather in Delhi:**\n• Temperature: 30°C (feels like 32°C)\n• Conditions: Partly cloudy\n• Humidity: 60%\n• Wind: 10 km/h NW\n• High/Low: 33°C / 26°C",
+            "bangalore": "🌤️ **Weather in Bangalore:**\n• Temperature: 26°C (feels like 28°C)\n• Conditions: Pleasant and clear\n• Humidity: 65%\n• Wind: 8 km/h NE\n• High/Low: 29°C / 22°C",
+            "chennai": "🌤️ **Weather in Chennai:**\n• Temperature: 34°C (feels like 36°C)\n• Conditions: Hot and sunny\n• Humidity: 70%\n• Wind: 14 km/h SE\n• High/Low: 36°C / 28°C",
+            "kolkata": "🌤️ **Weather in Kolkata:**\n• Temperature: 31°C (feels like 33°C)\n• Conditions: Humid\n• Humidity: 75%\n• Wind: 11 km/h S\n• High/Low: 33°C / 27°C",
+            "hyderabad": "🌤️ **Weather in Hyderabad:**\n• Temperature: 28°C (feels like 30°C)\n• Conditions: Warm and clear\n• Humidity: 55%\n• Wind: 9 km/h W\n• High/Low: 32°C / 24°C",
+            "ahmedabad": "🌤️ **Weather in Ahmedabad:**\n• Temperature: 31°C (feels like 33°C)\n• Conditions: Hot and dry\n• Humidity: 50%\n• Wind: 13 km/h NW\n• High/Low: 34°C / 26°C",
+            "pune": "🌤️ **Weather in Pune:**\n• Temperature: 27°C (feels like 29°C)\n• Conditions: Pleasant\n• Humidity: 60%\n• Wind: 7 km/h NE\n• High/Low: 30°C / 22°C",
+            "jaipur": "🌤️ **Weather in Jaipur:**\n• Temperature: 29°C (feels like 31°C)\n• Conditions: Dry and clear\n• Humidity: 45%\n• Wind: 12 km/h NW\n• High/Low: 32°C / 25°C",
+            "kanpur": "🌤️ **Weather in Kanpur:**\n• Temperature: 28°C (feels like 30°C)\n• Conditions: Clear sky\n• Humidity: 55%\n• Wind: 10 km/h NW\n• High/Low: 32°C / 24°C",
+            "lucknow": "🌤️ **Weather in Lucknow:**\n• Temperature: 29°C (feels like 31°C)\n• Conditions: Warm\n• Humidity: 60%\n• Wind: 9 km/h N\n• High/Low: 32°C / 25°C",
+            "nagpur": "🌤️ **Weather in Nagpur:**\n• Temperature: 32°C (feels like 34°C)\n• Conditions: Hot\n• Humidity: 50%\n• Wind: 11 km/h W\n• High/Low: 35°C / 27°C",
+            "indore": "🌤️ **Weather in Indore:**\n• Temperature: 28°C (feels like 30°C)\n• Conditions: Clear\n• Humidity: 55%\n• Wind: 8 km/h NE\n• High/Low: 31°C / 23°C",
+            "patna": "🌤️ **Weather in Patna:**\n• Temperature: 30°C (feels like 32°C)\n• Conditions: Humid\n• Humidity: 65%\n• Wind: 10 km/h E\n• High/Low: 33°C / 26°C",
+            "london": "🌤️ **Weather in London:**\n• Temperature: 15°C (feels like 13°C)\n• Conditions: Cloudy\n• Humidity: 80%\n• Wind: 15 km/h W\n• High/Low: 17°C / 12°C",
+            "new york": "🌤️ **Weather in New York:**\n• Temperature: 22°C (feels like 20°C)\n• Conditions: Sunny\n• Humidity: 65%\n• Wind: 12 km/h NE\n• High/Low: 24°C / 18°C",
+            "tokyo": "🌤️ **Weather in Tokyo:**\n• Temperature: 25°C (feels like 27°C)\n• Conditions: Partly cloudy\n• Humidity: 70%\n• Wind: 10 km/h E\n• High/Low: 27°C / 22°C",
+            "dubai": "🌤️ **Weather in Dubai:**\n• Temperature: 35°C (feels like 38°C)\n• Conditions: Hot and dry\n• Humidity: 40%\n• Wind: 18 km/h NW\n• High/Low: 38°C / 30°C",
+            "paris": "🌤️ **Weather in Paris:**\n• Temperature: 18°C (feels like 16°C)\n• Conditions: Rainy\n• Humidity: 75%\n• Wind: 14 km/h SW\n• High/Low: 20°C / 15°C"
+    }
+        for city, weather_info in cities.items():
             if city in text_lower:
-                found_city = city
-                break
-    
-    # If no city found, use default (Kanpur)
-        if not found_city:
-            found_city = "kanpur"
-    
-    # Get weather data
-        weather_data = self.weather_service.get_weather(found_city)
-        return self.weather_service.format_weather_response(weather_data)
+                return weather_info
+        return "🌤️ **Weather in Kanpur:**\n• Temperature: 28°C (feels like 30°C)\n• Conditions: Clear sky\n• Humidity: 55%\n• Wind: 10 km/h NW\n• High/Low: 32°C / 24°C\n\n*Try: weather in Mumbai, Delhi, Bangalore, etc.*"
     
     def _tell_joke(self):
         """Tell a random joke"""
